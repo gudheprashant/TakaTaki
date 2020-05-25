@@ -4,7 +4,7 @@
 [ext_resource path="res://Asset/Elemental_Cards/Fire/10/spritesheet.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 112, 144 )
+extents = Vector2( 368, 464 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "FlipAnimation"
@@ -43,7 +43,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.3, 0.3 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 vframes = 2
 hframes = 7
