@@ -13,17 +13,25 @@ var centery = Vector2.ZERO
 var flip_final_point_bottom = Vector2.ZERO 
 var flip_final_point_top = Vector2.ZERO 
 
-
+var sprite_node = null
 
 var is_on_top = false;
 
+var isAnimationDone = false;
+
 var animationPlayer = null
+
+func _init():
+	sprite_node = get_node("Sprite")
+	pass
 
 func _ready():
 	
 	animationPlayer = get_node("AnimationPlayer")
 	centerx =  get_viewport_rect().size.x
 	centery = get_viewport_rect().size.y
+	
+#	sprite_node.set_texture(fire1)
 	
 	print("Centerx:", centerx)
 	print("Centery:", centery)
@@ -42,6 +50,14 @@ func _process(delta):
 
 func _physics_process(delta):
 	var movement_vector = move_the_card(delta)
+	var x = round(self.position.x)
+	var y = round(self.position.y)
+	if(is_on_top):
+		if(x == flip_final_point_top.x and y == flip_final_point_top.y):
+			isAnimationDone = true
+	else:
+		if(x == flip_final_point_bottom.x and y == flip_final_point_bottom.y):
+			isAnimationDone = true
 	
 
 func _check_is_card_on_top():
@@ -94,7 +110,7 @@ func move_the_card(var delta):
 #	else:
 #		distance = flip_final_point - transform.get_origin()
 	
-	move_and_slide(distance * MAX_SPEED)
+	return move_and_slide(distance * MAX_SPEED)
 	
 func slide_up():
 	var distance
