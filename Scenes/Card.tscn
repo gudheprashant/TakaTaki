@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Card.gd" type="Script" id=1]
-[ext_resource path="res://Asset/Elemental_Cards/Fire/10/spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://Asset/Elemental_Cards/Fire/1.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 368, 464 )
+extents = Vector2( 112, 144 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "FlipAnimation"
@@ -58,3 +58,4 @@ anims/IdleBack = SubResource( 3 )
 [connection signal="input_event" from="." to="." method="_on_Card_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

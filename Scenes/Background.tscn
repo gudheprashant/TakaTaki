@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Asset/BG/BG Horizontal V3.png" type="Texture" id=1]
-[ext_resource path="res://src/BGSprite.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Asset/progressbar.png" type="Texture" id=4]
 [ext_resource path="res://src/BGNode.gd" type="Script" id=5]
@@ -27,7 +26,6 @@ position = Vector2( 0.00012207, 0 )
 scale = Vector2( 0.547009, 0.666667 )
 texture = ExtResource( 1 )
 centered = false
-script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
