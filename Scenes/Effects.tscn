@@ -21,6 +21,7 @@ tracks/0/keys = {
 [node name="Effects" type="Node2D"]
 
 [node name="Sparkle" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 centered = false
 vframes = 7

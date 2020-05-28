@@ -21,6 +21,8 @@ var isAnimationDone = false;
 
 var animationPlayer = null
 
+var isActiveCard = false
+
 onready var bgNode = get_node("/root/Background/")
 
 func _init():
@@ -48,18 +50,18 @@ func _ready():
 
 
 func _process(delta):
+	if(is_on_top and bgNode.activePlayer.match("top")):
+		isActiveCard = true;
+	elif(!is_on_top and bgNode.activePlayer.match("bottom")):
+		isActiveCard = true;
+	else:
+		isActiveCard = false;
 	pass
 
 func _physics_process(delta):
 	var movement_vector = move_the_card(delta)
 	var x = round(self.position.x)
 	var y = round(self.position.y)
-#	if(is_on_top):
-#		if(x == flip_final_point_top.x and y == flip_final_point_top.y):
-#			isAnimationDone = true
-#	else:
-#		if(x == flip_final_point_bottom.x and y == flip_final_point_bottom.y):
-#			isAnimationDone = true
 	
 
 func _check_is_card_on_top():
@@ -72,19 +74,19 @@ func _check_is_card_on_top():
 func _on_Card_input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton):
 		if(Input.is_mouse_button_pressed(BUTTON_LEFT)):
-			
 			if(!card_click):
-				animationPlayer.play("FlipAnimation")
-			
-			card_click = true
-			
-			get_node("CollisionShape2D").disabled = true
-			if(is_on_top):
-				bgNode._create_top_card(false)
-			else:
-				bgNode._create_bottom_card(false)
-			set_physics_process(true)
-			
+				if(is_on_top and isActiveCard):
+					get_node("CollisionShape2D").disabled = true
+					bgNode._create_top_card(false)
+					animationPlayer.play("FlipAnimation")
+					card_click = true
+					set_physics_process(true)
+				elif(!is_on_top and isActiveCard):
+					get_node("CollisionShape2D").disabled = true
+					bgNode._create_bottom_card(false)
+					animationPlayer.play("FlipAnimation")
+					card_click = true
+					set_physics_process(true)
 
 
 func _on_Card_mouse_entered():
@@ -114,23 +116,22 @@ func move_the_card(var delta):
 	
 func slide_up():
 	var distance
-	if(is_on_top):
-		distance = Vector2(self.position.x, self.position.y + 500) - transform.get_origin()
-	else:
-		distance = Vector2(self.position.x, self.position.y - 500) - transform.get_origin()
-	
-	distance = move_and_slide(distance * MAX_SPEED)
+	if(isActiveCard):
+		if(is_on_top):
+			distance = Vector2(self.position.x, self.position.y + 500) - transform.get_origin()
+		else:
+			distance = Vector2(self.position.x, self.position.y - 500) - transform.get_origin()
+		move_and_slide(distance * MAX_SPEED)
 	return
 
 func slide_down():
 	var distance
-	
-	if(is_on_top):
-		distance = Vector2(self.position.x, self.position.y - 500) - transform.get_origin()
-	else:
-		distance = Vector2(self.position.x, self.position.y + 500) - transform.get_origin()
-
-	move_and_slide(distance * MAX_SPEED)
+	if(isActiveCard):
+		if(is_on_top):
+			distance = Vector2(self.position.x, self.position.y - 500) - transform.get_origin()
+		else:
+			distance = Vector2(self.position.x, self.position.y + 500) - transform.get_origin()
+		move_and_slide(distance * MAX_SPEED)
 	return 
 
 
