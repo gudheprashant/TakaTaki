@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Card Game"
-run/main_scene="res://Scenes/Background.tscn"
+run/main_scene="res://Scenes/IntroScene.tscn"
 config/icon="res://icon.png"
 
 [display]

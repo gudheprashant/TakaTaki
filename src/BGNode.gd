@@ -41,6 +41,7 @@ var gameOverNode = preload("res://Scenes/GameOverScene.tscn").instance()
 var activePlayer = null
 var turnLblBottom = null
 var turnLblTop = null
+var gameOver = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,11 +63,11 @@ func _ready():
 	
 	if(num == 0):
 		activePlayer = "bottom"
-		turnLblBottom.text = "Player's Turn"
+		turnLblBottom.text = "Player1's Turn"
 		turnLblTop.text = ""
 	else:
 		activePlayer = "top"
-		turnLblTop.text = "AI's Turn"
+		turnLblTop.text = "Player2's Turn"
 		turnLblBottom.text = ""
 		
 	
@@ -95,6 +96,7 @@ func _process(delta):
 		old_total_bottom_cards = total_bottom_cards
 	
 	if(total_bottom_cards <= 0 and total_top_cards <= 0):
+		gameOver = true;
 		var animationPlayer = gameOverNode.get_node("AnimationPlayer")
 		yield(get_tree().create_timer(2), "timeout")
 		get_tree().change_scene("res://Scenes/GameOverScene.tscn")
@@ -204,12 +206,16 @@ func moveAllCardsAside():
 	pass
 
 func switchPlayer():
-	if(activePlayer.match("top")):
-		activePlayer = "bottom"
-		turnLblBottom.text = "Player's Turn"
+	if(!gameOver):
+		if(activePlayer.match("top")):
+			activePlayer = "bottom"
+			turnLblBottom.text = "Player1's Turn"
+			turnLblTop.text = ""
+		elif(activePlayer.match("bottom")):
+			activePlayer = "top"
+			turnLblTop.text = "Player2's Turn"
+			turnLblBottom.text = ""
+	else:
 		turnLblTop.text = ""
-	elif(activePlayer.match("bottom")):
-		activePlayer = "top"
-		turnLblTop.text = "AI's Turn"
 		turnLblBottom.text = ""
 	pass
