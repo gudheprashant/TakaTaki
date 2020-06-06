@@ -42,6 +42,10 @@ var activePlayer = null
 var turnLblBottom = null
 var turnLblTop = null
 var gameOver = false
+var p1Score = 0
+var p2Score = 0
+var p1ScoreNode = null
+var p2ScoreNode = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,6 +54,11 @@ func _ready():
 	topPlayerCards = $Area2D/TopPlayerCards
 	bottomPlayerCards = $Area2D/BottomPlayerCards
 	radialProgress = get_node("Area2D/TextureProgress")
+	p1ScoreNode = get_node("Area2D/GridContainer/P1Score")
+	p2ScoreNode = get_node("Area2D/GridContainer/P2Score")
+	
+	p1ScoreNode.text = String(p1Score)
+	p2ScoreNode.text = String(p2Score)
 	
 	topPlayerCards.text = "Cards left: " + String(total_top_cards)
 	bottomPlayerCards.text = "Cards left: " + String(total_bottom_cards)
@@ -95,13 +104,25 @@ func _process(delta):
 		bottomPlayerCards.text = "Cards left: " + String(total_bottom_cards)
 		old_total_bottom_cards = total_bottom_cards
 	
+	
+	p1ScoreNode.text = String(p1Score)
+	p2ScoreNode.text = String(p2Score)
+	
 	if(total_bottom_cards <= 0 and total_top_cards <= 0):
+		if(p1Score > p2Score):
+			Global.SetWinner("Player 1")
+		elif(p1Score < p2Score):
+			Global.SetWinner("Player 2")
+		else:
+			Global.SetWinner("Draw")
+			
 		gameOver = true;
 		var animationPlayer = gameOverNode.get_node("AnimationPlayer")
 		yield(get_tree().create_timer(2), "timeout")
 		get_tree().change_scene("res://Scenes/GameOverScene.tscn")
 		animationPlayer.play("FadeAnimation")
 		yield(animationPlayer, "animation_finished")
+	
 		
 #	radialProgress.set_fill_mode(4)
 #	for i in range(100):
@@ -178,7 +199,13 @@ func checkForMatchingNodes():
 		var secondNumber = slCard.get_string()
 		
 		if(firstNumber == secondNumber):
+			
 			print("Card matched")
+			if(activePlayer.match("top")):
+				p2Score += 1
+			elif(activePlayer.match("bottom")):
+				p1Score += 1
+			
 			playMatchingAnimation()
 			moveAllCardsAside()
 			switchPlayer()

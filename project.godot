@@ -19,6 +19,10 @@ config/name="Card Game"
 run/main_scene="res://Scenes/IntroScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://src/Global.gd"
+
 [display]
 
 window/size/width=1280

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Asset/BG/BG Horizontal V3.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Asset/progressbar.png" type="Texture" id=4]
 [ext_resource path="res://src/BGNode.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -16,13 +15,17 @@ font_data = ExtResource( 3 )
 size = 20
 font_data = ExtResource( 3 )
 
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 3 )
+
 [node name="Background" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 0.00012207, 16 )
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
-position = Vector2( 0.00012207, 0 )
+position = Vector2( 0, -16 )
 scale = Vector2( 0.547009, 0.666667 )
 texture = ExtResource( 1 )
 centered = false
@@ -71,9 +74,9 @@ __meta__ = {
 
 [node name="TurnLabelTop" type="Label" parent="Area2D"]
 margin_left = 136.0
-margin_top = 104.0
+margin_top = 120.0
 margin_right = 342.0
-margin_bottom = 152.0
+margin_bottom = 168.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -105,17 +108,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress" type="TextureProgress" parent="Area2D"]
-margin_left = 88.0
-margin_top = 288.0
-margin_right = 3448.0
-margin_bottom = 3648.0
-rect_scale = Vector2( 0.03, 0.03 )
-texture_under = ExtResource( 4 )
-texture_progress = ExtResource( 4 )
-fill_mode = 4
-tint_under = Color( 0.298039, 0.388235, 0.215686, 1 )
-tint_progress = Color( 0.588235, 0, 0, 1 )
+[node name="GridContainer" type="GridContainer" parent="Area2D"]
+margin_left = 48.0
+margin_top = 272.0
+margin_right = 189.0
+margin_bottom = 360.0
+custom_constants/vseparation = 16
+custom_constants/hseparation = 16
+columns = 2
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
+
+[node name="ScoreTitle1" type="Label" parent="Area2D/GridContainer"]
+margin_right = 78.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "P1 Score"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="ScoreTitle2" type="Label" parent="Area2D/GridContainer"]
+margin_left = 94.0
+margin_right = 176.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "P2 Score"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="P1Score" type="Label" parent="Area2D/GridContainer"]
+margin_top = 37.0
+margin_right = 78.0
+margin_bottom = 58.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+uppercase = true
+
+[node name="P2Score" type="Label" parent="Area2D/GridContainer"]
+margin_left = 94.0
+margin_top = 37.0
+margin_right = 176.0
+margin_bottom = 58.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+uppercase = true
